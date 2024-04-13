@@ -54,6 +54,16 @@ jobs:
           run: |
             echo Hello Apple
             echo This is Mac Only
+  
+  # Dependent Job, Needs to Complete build-api job
+  build-backend:
+    needs: [build-app,build-api]
+    runs-on: macos-latest
+    steps:
+        - name: Print a line in Mac again.
+          run: |
+            echo Hello Apple again.
+            echo This is Mac Only.
 
  # InDependent Job
   build-db:
