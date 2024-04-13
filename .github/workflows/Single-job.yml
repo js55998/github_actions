@@ -1,0 +1,12 @@
+name: Single-job
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build-without-step:
+    runs-on: ubuntu-latest
+
+  build-with-step:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello ubuntu"
