@@ -1,0 +1,15 @@
+name: expressions_github_actions
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+    MY_ENV_VAR: ${{ github.ref == 'refs/heads/main' && 'value_for_main_branch' || 'value_for_other_branches' }}
+
+
+jobs:
+  show-values:
+    runs-on: ubuntu-latest
+    steps:
+     - name: print value
+       run: echo ${{env.MY_ENV_VAR}}
