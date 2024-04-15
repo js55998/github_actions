@@ -8,5 +8,11 @@ jobs:
     steps:
       - id: get_json_data
         run: |
-          file_path="$GITHUB_WORKSPACE/src/main.cpp"
-          echo "File path: $file_path"
+          filepath="$GITHUB_WORKSPACE/data.json"
+          content=$(cat $filepath)
+          echo "::set-output name=jsonData::$content"
+      - id: print_data
+        run: |
+           echo "Data fruit: ${{ fromJSON(steps.get_json_data.outputs.jsonData).fruit }}"
+           echo "Data size: ${{ fromJSON(steps.get_json_data.outputs.jsonData).size }}"
+           echo "Data color: ${{ fromJSON(steps.get_json_data.outputs.jsonData).color }}"
