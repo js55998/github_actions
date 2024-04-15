@@ -30,8 +30,8 @@ jobs:
      - name: Ends With
        run: echo ${{env.value_end_with}}
 
-     - name: Ends With
+     - name: format Value
        run: echo ${{env.value_format}}
 
-     - name: Ends With
+     - name: Join Value
        run: echo ${{env.value_join}}
