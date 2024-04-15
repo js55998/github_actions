@@ -35,3 +35,8 @@ jobs:
 
      - name: Join Value
        run: echo ${{env.value_join}}
+
+     - name: To Json
+       run: echo ${{toJSON(job)}}
+
+    
