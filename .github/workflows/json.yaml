@@ -9,6 +9,7 @@ jobs:
       - id: get_json_data
         run: |
           filepath="$GITHUB_WORKSPACE/data.json"
+          echo "$filepath"
           content=$(cat $filepath)
           echo "::set-output name=jsonData::$content"
       - id: print_data
