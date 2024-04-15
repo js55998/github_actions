@@ -3,29 +3,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-    value_contains: contains('Hello world', 'wo') && 'Yes' || 'No'
-
-    event_name: ${{contains(fromJSON('["workflow_dispatch"]'),github.event_name) && 'YES' || 'NO'}}
-
-    start_with_string: ${{startsWith('Hello world', 'He') && 'YES' || 'NO'}}
-
-    ends_with_string: ${{endsWith('Hello world', 'ld') && 'YES' || 'NO'}}
-
-    format_value: format('Hello {0} {1} {2}', 'Mona', 'the', 'Octocat')
-
-
 jobs:
   show-values:
     runs-on: ubuntu-latest
     steps:
      - name: is Hello World contains wo
-       run: ${{env.value_contains}}
-     - name: is the event name is workflow_dispatch
-       run: ${{env.event_name}}
-     - name: is Hello World starts with He
-       run: ${{env.start_with_string}}
-     - name: is Hello World ends with ld
-       run: ${{env.ends_with_string}}
-     - name: format Value
-       run: ${{env.format_value}}
+       run: ${{ contains('Hello world', 'wo') && 'Yes' || 'No' }}
