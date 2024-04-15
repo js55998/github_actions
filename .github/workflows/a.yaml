@@ -2,6 +2,7 @@ name: expressions-example
 on:
   push:
   pull_request:
+
 jobs:
   use-expressions:
     strategy:
@@ -33,10 +34,6 @@ jobs:
         name: To JSON
         run: echo 'Job context is ${{ toJSON(job) }}'
       -
-        name: From JSON
-        env: ${{ fromJSON('{"FAVORITE_FRUIT":"APPLE", "FAVORITE_COLOR": "BLUE"}')}}
-        run: echo "I would like a ${FAVORITE_COLOR} ${FAVORITE_FRUIT}"
-      -
         name: Success
         if: ${{ success() }}
         run: echo "Still running..."
@@ -52,3 +49,16 @@ jobs:
         name: Failure
         if: ${{ failure() }}
         run: echo "Something went wrong..."
+
+      - id: set_var
+        run: |
+            content=`cat ./path/to/package.json`
+            # the following lines are only required for multi line json
+            content="${content//'%'/'%25'}"
+            content="${content//$'\n'/'%0A'}"
+            content="${content//$'\r'/'%0D'}"
+            # end of optional handling for multi line json
+            echo "::set-output name=packageJson::$content"
+            echo "${{fromJson(steps.set_var.outputs.packageJson).version}}"
+
+
