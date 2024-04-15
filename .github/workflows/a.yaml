@@ -48,6 +48,6 @@ jobs:
       -
         name: Failure
         if: ${{ failure() }}
-        run: echo "Something went wrong..."
+        run: echo "Something went wrong..."\
 
 
