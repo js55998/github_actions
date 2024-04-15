@@ -11,7 +11,6 @@ env:
     myHexNumber: ${{ 0xff }}
     myExponentialNumber: ${{ -2.99e-2 }}
     myString: Mona the Octocat
-    myStringInBraces: ${{ 'It''s open source!' }}
 
 
 jobs:
@@ -27,4 +26,3 @@ jobs:
          echo ${{env.myHexNumber}}
          echo ${{env.myExponentialNumber}}
          echo ${{env.myString}}
-         echo ${{env.myStringInBraces}}
