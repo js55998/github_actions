@@ -2,10 +2,11 @@ name: function_github_actions
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+env:
+    value_contain: ${{ contains('Hello world', 'wo') && 'Yes' || 'No' }}
 jobs:
   show-values:
     runs-on: ubuntu-latest
     steps:
      - name: is Hello World contains wo
-       run: echo ${{ contains('Hello world', 'wo') && 'Yes' || 'No' }}
+       run: echo ${{env.value_contain}}
