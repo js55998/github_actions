@@ -1,42 +1,53 @@
-name: function_github_actions
+name: expressions-example
 on:
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-env:
-    value_contain: ${{ contains('Hello world', 'wo') && 'Yes' || 'No' }}
-
-    event_name: ${{contains(fromJSON('["workflow_dispatch"]'),github.event_name) && 'Yes' || 'No'  }}
-    value_start_with: ${{ startsWith('Hello world', 'He') && 'Yes' || 'No' }}
-
-    value_end_with: ${{ endsWith('Hello world', 'ld') && 'Yes' || 'No' }}
-
-    value_format: ${{ format('Hello {0} {1} {2}', 'Mona', 'the', 'Octocat')}}
-
-    value_join: ${{ join('"git","hub"', ', ') }}
+  push:
+  pull_request:
 
 jobs:
-  show-values:
+  use-expressions:
+    strategy:
+      matrix:
+        greeting: [Hello, Howdy, Hey]
     runs-on: ubuntu-latest
     steps:
-     - name: is Hello World contains wo
-       run: echo ${{env.value_contain}}
+      -
+        name: Print if 'Hello'
+        if: ${{ matrix.greeting == 'Hello' }}
+        run: echo "greeting is Hello"
+      -
+        name: Print if starts with 'He'
+        if: ${{ startsWith(matrix.greeting, 'He') }}
+        run: echo "greeting starts with He"
+      -
+        name: Print if ends with 'y'
+        if: ${{ endsWith(matrix.greeting, 'y') }}
+        run: echo "greeting ends with y"
+      -
+        name: Print if contains 'ow'
+        if: ${{ contains(matrix.greeting, 'ow') }}
+        run: echo "greeting contains ow"
+      -
+        name: Print formatted greeting
+        run: |
+          echo "${{ format('{0} says {1}', github.actor, matrix.greeting) }}"
+      -
+        name: To JSON
+        run: echo 'Job context is ${{ toJSON(job) }}'
+      -
+        name: Success
+        if: ${{ success() }}
+        run: echo "Still running..."
+      -
+        name: Always
+        if: ${{ always() }}
+        run: echo "You will always see this"
+      -
+        name: Canceled
+        if: ${{ cancelled() }}
+        run: echo "You canceled the workflow"
+      -
+        name: Failure
+        if: ${{ failure() }}
+        run: echo "Something went wrong..."\
 
-     - name: Event Name
-       run: echo ${{env.event_name}}
 
-     - name: Start With
-       run: echo ${{env.value_start_with}}
-
-     - name: Ends With
-       run: echo ${{env.value_end_with}}
-
-     - name: format Value
-       run: echo ${{env.value_format}}
-
-     - name: Join Value
-       run: echo ${{env.value_join}}
-
-     - name: To Json
-       run: echo ${{toJSON(job)}}
-
-    
