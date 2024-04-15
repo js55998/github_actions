@@ -1,0 +1,12 @@
+name: function_github_actions
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+jobs:
+  show-values:
+    runs-on: ubuntu-latest
+    steps:
+     - name: print value
+       run: contains('Hello world', 'wo')
