@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: is Hello World contains wo
-       run: ${{ contains('Hello world', 'wo') && 'Yes' || 'No' }}
+       run: echo ${{ contains('Hello world', 'wo') && 'Yes' || 'No' }}
