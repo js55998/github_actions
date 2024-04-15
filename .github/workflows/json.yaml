@@ -1,4 +1,4 @@
-name: build
+name: json_Viewr
 on: push
 env:
   continue: true
