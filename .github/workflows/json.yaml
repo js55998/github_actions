@@ -1,22 +1,17 @@
-name: json_Viewr
-on: push
-env:
-  continue: true
-  time: 3
+name: json_view
+on:
+  push:
+    branches: [ "main" ]
 jobs:
-  job1:
+  build-with-step:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - id: set-matrix
-        run: echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
-        continue-on-error: ${{ fromJSON(env.continue) }}
-        timeout-minutes: ${{ fromJSON(env.time) }}
-  job2:
-    needs: job1
-    runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{ fromJSON(needs.job1.outputs.matrix) }}
-    steps:
-      - run: build
+      - id: get_json_data
+        run: |
+          content=$(cat data.json)
+          echo "::set-output name=jsonData::$content"
+      - id: print_data
+        run: |
+           echo "Data fruit: ${{ fromJSON(steps.get_json_data.outputs.jsonData).fruit }}"
+           echo "Data size: ${{ fromJSON(steps.get_json_data.outputs.jsonData).size }}"
+           echo "Data color: ${{ fromJSON(steps.get_json_data.outputs.jsonData).color }}"
