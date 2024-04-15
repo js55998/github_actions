@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-    value_contains: ${{ contains('Hello world', 'wo') && 'Yes' || 'No' }}
+    value_contains: contains('Hello world', 'wo') && 'Yes' || 'No'
 
     event_name: ${{contains(fromJSON('["workflow_dispatch"]'),github.event_name) && 'YES' || 'NO'}}
 
