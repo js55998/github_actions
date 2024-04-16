@@ -2,6 +2,21 @@ name: Context testing
 on: push
 
 jobs:
+  seting-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: echo "matrix={\"include\":[{\"project\":\"Chapter-One\",\"config\":\"Test\"},{\"project\":\"Chapter-Two\",\"config\":\"Debug\"},{\"project\":\"Chapter-Three\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
+  view-matrix:
+    needs: seting-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.seting-matrix.outputs.matrix) }}
+    steps:
+      - run: |
+         echo "Job Done"
   dump_contexts_to_log:
     runs-on: ubuntu-latest
     steps:
@@ -23,9 +38,9 @@ jobs:
         run: echo "$RUNNER_CONTEXT"
       - name: Dump strategy context
         env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+          STRATEGY_CONTEXT: ${{ toJson(strategy)}}
         run: echo "$STRATEGY_CONTEXT"
       - name: Dump matrix context
         env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+          MATRIX_CONTEXT: ${{ toJson(matrix)}}
         run: echo "$MATRIX_CONTEXT"
