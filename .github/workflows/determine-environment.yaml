@@ -1,0 +1,48 @@
+name: Run environment example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  determine-environment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Select stage
+        id: select-stage
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "production"
+            echo "selected-stage=production" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "staging"
+            echo "selected-stage=staging" >> "$GITHUB_OUTPUT"
+          else
+            echo "test"
+            echo "selected-stage=test" >> "$GITHUB_OUTPUT"
+          fi
+
+    outputs:
+      selected-stage: ${{ steps.select-stage.outputs.selected-stage }}
+
+  deploy-environment:
+    needs: determine-environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Production
+        if: ${{ needs.determine-environment.outputs.selected-stage == 'production' }}
+        run: echo "Deploying to production environment..."
+
+      - name: Run Staging
+        if: ${{ needs.determine-environment.outputs.selected-stage == 'staging' }}
+        run: echo "Deploying to staging environment..."
+
+      - name: Run Test
+        if: ${{ needs.determine-environment.outputs.selected-stage == 'test' }}
+        run: echo "Deploying to test environment..."
