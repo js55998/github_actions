@@ -1,0 +1,18 @@
+name: Example workflow
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set environment variable
+      run: echo "MY_VAR=Debasish Sahoo" >> $GITHUB_ENV
+
+    - name: Use environment variable in script
+      run: |
+        if [ "$MY_VAR" == "Debasish Sahoo" ]; then
+          echo "My var is set"
+        fi
