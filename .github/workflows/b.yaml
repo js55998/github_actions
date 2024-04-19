@@ -1,0 +1,27 @@
+name: Single-job
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build-with-step:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump Github Context
+        id: github_context_step
+        run: echo '${{toJSON(github)}}'
+      - name: Dump job Context
+        id: github_job_step
+        run: echo '${{toJSON(job)}}'
+      - name: Dump steps Context
+        id: github_steps_step
+        run: echo '${{toJSON(steps)}}'
+      - name: Dump runner Context
+        id: github_runner_step
+        run: echo '${{toJSON(runner)}}'
+      - name: Dump Strategy Context
+        id: github_Strategy_step
+        run: echo '${{toJSON(Strategy)}}'
+      - name: Dump Matrix Context
+        id: github_Matrix_step
+        run: echo '${{toJSON(matrix)}}'
+        
