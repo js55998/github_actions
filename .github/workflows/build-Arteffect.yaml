@@ -1,0 +1,27 @@
+name: Build and Upload Docker Image
+
+on: [push]  # Run on push events
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to DockerHub (optional)
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t art-image:${{ github.ref_name }} .  # Tag image with branch name
+
+      - name: Store Docker image as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-image
+          path: art-image:${{ github.ref_name }}  # Upload tagged image
+
