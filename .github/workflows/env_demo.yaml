@@ -1,0 +1,66 @@
+name: Using_env_context
+on: push
+env:
+  var1: Debasish
+  var2: Chandan
+
+jobs:
+  print-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print env context
+        run: |
+          echo "All environment variables:"
+          env
+  access-vars:
+    runs-on: ubuntu-latest
+    env:
+      MY_CUSTOM_VAR: "This is a custom variable"
+    steps:
+      - name: Print workflow and custom variable
+        run: |
+          echo "Workflow variable (GITHUB_REPOSITORY): $GITHUB_REPOSITORY"
+          echo "Custom variable (MY_CUSTOM_VAR): $MY_CUSTOM_VAR
+
+
+  windows_job:
+    runs-on: windows-latest
+    steps:
+      - name: Accessing specific environment variables on Windows Os
+        run: |
+         echo 'Hi ${{ env.var1}}'
+         echo 'Hi ${{ env.var2}}'
+        env:
+          process-name: DevOps
+
+
+  linux_job:
+    runs-on: ubuntu-latest
+    env:
+      process-name: gitops
+    steps:
+      - name: Accessing specific environment variables on Linux OS
+        run: echo 'Hi ${{ env.process-name}}'
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Using environment variables in commands
+        run: |
+          if [[ "$GITHUB_REF" == "refs/heads/master" ]]; then
+            echo "Building for master branch..."
+          fi
+
+  build-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build artifact for specific branch & Using environment variables in file paths
+        run: |
+          branch_name=${{ github.ref_name }}
+          artifact_path="output/build_${branch_name}.zip"
+          # Build commands to create artifact and store it in $artifact_path
+          echo "Artifact built: $artifact_path"
