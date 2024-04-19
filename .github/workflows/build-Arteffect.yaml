@@ -17,14 +17,14 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t art-image:${{ github.ref_name }} .  # Tag image with branch name
+          docker build -t js55998/${{ github.ref_name }} .  # Tag image with branch name
 
       - name: Publish Image to Docker Hub
-        run: docker push art-image:${{ github.ref_name }}:latest
+        run: docker push js55998/${{ github.ref_name }}:latest
 
       - name: Store Docker image as artifact
         uses: actions/upload-artifact@v3
         with:
           name: docker-image
-          path: art-image:${{ github.ref_name }}  # Upload tagged image
+          path: js55998/${{ github.ref_name }}  # Upload tagged image
 
