@@ -1,4 +1,4 @@
-name: Var_Context
+name: Var_Context_Workflow_Demo
 on:
     workflow_dispatch:
 env:
