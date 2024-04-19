@@ -3,26 +3,22 @@ name: Multi-Job Workflow with Env Sharing
 on: [push]
 
 jobs:
-  download-data:
+  data:
     runs-on: ubuntu-latest
     outputs:
-        ENV_VAR_D_D: ${{ steps.set-env-var.outputs.ENV_VAR }}
+        ENV_VAR_D: ${{ steps.set-env-var.outputs.ENV_VAR }}
     steps:
-      - name: Download data
+      - name: data
         id: set-env-var
-        run: |
-          # Download data and store URL in DOWNLOADED_DATA_URL
-          echo "DOWNLOADED_DATA_URL=https://example.com/data.tar.gz" >> $GITHUB_ENV
-          echo "::set-output name=ENV_VAR::hello"
+        run: echo "::set-output name=ENV_VAR::hello"
   build:
-    needs: download-data
+    needs: data
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Use downloaded data and print env value
+      - name: print env value
         run: |
           echo "$GITHUB_ENV"
-          echo "Downloading data from: $DOWNLOADED_DATA_URL"
-          echo "Environment Variable from Job 1: ${{ needs.download-data.outputs.ENV_VAR_D_D }}"
+          echo "Environment Variable from Job 1: ${{ needs.data.outputs.ENV_VAR_D }}"
 
