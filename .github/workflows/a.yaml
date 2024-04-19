@@ -1,20 +1,30 @@
 name: Vars_Demo
 on:
+  push:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
   display-variables:
-    name: demo
+    name: Display Value
     runs-on: ubuntu-latest
     steps:
     - name: Use variables
       run: |
-        #echo "repository variable : $REPOSITORY_VAR"
+        echo "Only variable : ${{toJSON(vars)}}"
+        echo "repository variable : $REPOSITORY_VAR"
         echo "organization variable : $ORGANIZATION_VAR"
-        echo "Only variable : ${{ vars}}"
-        #echo "overridden variable : $OVERRIDE_VAR"
-        #echo "variable from shell environment : $env_var"
       env:
-        #REPOSITORY_VAR: ${{ vars.REPOSITORY_VAR }}
+        REPOSITORY_VAR: ${{ vars.ENV_CONTEXT_VAR }}
         ORGANIZATION_VAR: ${{ vars.ORGANIZATION_VAR }}
-        #OVERRIDE_VAR: ${{ vars.OVERRIDE_VAR }}
+
+  top-secret-production:
+          runs-on: ubuntu-latest
+          environment: dev
+          env:
+            APP_ID: ${{ vars.APP_ID }}
+
+          steps:
+            - name: Read a variable
+              run: echo "My APP_ID value in the dev job is $APP_ID"
+
