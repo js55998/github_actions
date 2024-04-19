@@ -1,0 +1,18 @@
+name: Example workflow
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set environment variable
+      run: echo "MY_VAR=my-value" >> $GITHUB_ENV
+
+    - name: Use environment variable in shell command
+      run: echo $MY_VAR > my_file.txt
+
+    - name: Display the contents of the file
+      run: cat my_file.txt
