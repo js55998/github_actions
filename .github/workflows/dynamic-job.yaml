@@ -11,10 +11,10 @@ jobs:
         uses: actions/checkout@v3
       - name: Build for specific architecture
         run: |
-          echo "Building for architecture: $strategy.matrix.architecture"
-          if [[ "$architecture" == "x86_64" ]]; then
+          echo "Building for architecture: ${{matrix.architecture}}"
+          if [[ "${{matrix.architecture}}" == "x86_64" ]]; then
             echo "Building for x86_64..."
-          elif [[ "$architecture" == "arm64" ]]; then
+          elif [[ "${{matrix.architecture}}" == "arm64" ]]; then
             echo "Building for arm64..."
           fi
 
