@@ -3,13 +3,13 @@ name: Build on Multiple Architectures (Dynamic)
 on: [push]
 
 env:
-  ARCHS: '{"architectures": ["x86_64", "arm64"]}'
+  archs: '{"architectures": ["x86_64", "arm64"]}'
 
 jobs:
   build:
     strategy:
       matrix:
-        architecture: ${{fromJson(env.ARCHS).architectures }}
+          architecture: ["x86_64", "arm64"]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
