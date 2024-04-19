@@ -52,15 +52,3 @@ jobs:
           if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
             echo "Building for master branch..."
           fi
-
-  build-artifact:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Build artifact for specific branch & Using environment variables in file paths
-        run: |
-          branch_name=${{ github.ref_name }}
-          artifact_path="output/build_${branch_name}.zip"
-          # Build commands to create artifact and store it in $artifact_path
-          echo "Artifact built: $artifact_path"
