@@ -1,0 +1,14 @@
+name: Example workflow
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MY_VAR: my-value
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Use environment variable
+      run: echo "My var is $MY_VAR"
