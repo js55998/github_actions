@@ -1,10 +1,5 @@
 name: Build on Multiple Architectures (Dynamic)
-
 on: [push]
-
-env:
-  archs: '{"architectures": ["x86_64", "arm64"]}'
-
 jobs:
   build:
     strategy:
