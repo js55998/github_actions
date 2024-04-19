@@ -9,10 +9,10 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set environment variable
-      run: echo "MY_VAR=my-value" >> $GITHUB_ENV
+      run: echo "MY_NAME=Debasish Sahoo" >> $GITHUB_ENV
 
     - name: Use environment variable in shell command
-      run: echo $MY_VAR > my_file.txt
+      run: echo $MY_NAME > my_file.txt
 
     - name: Display the contents of the file
       run: cat my_file.txt
