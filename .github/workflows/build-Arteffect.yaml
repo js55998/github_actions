@@ -19,6 +19,9 @@ jobs:
         run: |
           docker build -t art-image:${{ github.ref_name }} .  # Tag image with branch name
 
+      - name: Publish Image to Docker Hub
+        run: docker push art-image:${{ github.ref_name }}:latest
+
       - name: Store Docker image as artifact
         uses: actions/upload-artifact@v3
         with:
