@@ -16,7 +16,7 @@ jobs:
          echo "Job Container=${{github.job.services.id}}"
          echo "Job Container=${{github.job.services.network}}"
          echo "Job Container=${{github.job.services.ports}}"
-         echo "Job Container=${{github.job.status}}"
+         echo "Job Container=${{job.status}}"
 
 
 
