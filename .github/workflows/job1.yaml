@@ -1,13 +1,10 @@
-name: Display Job Context
-on: push
+name: Basic Job Context
+on: [push]
 
 jobs:
-  display-context:
+  basic-job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Show Job and Workflow Details
-        run: |
-          echo "Job name: ${{ context.job }}"
-          echo "Workflow name: ${{ context.github.workflow }}"
-          echo "Run number: ${{ context.github.run_number }}"
+      - name: Print Job Context
+        run: echo "Job Name= ${{github.job}}"
+
