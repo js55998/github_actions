@@ -1,7 +1,10 @@
 name: Basic Job Context
 on: [push]
+name: Basic Job Context
+on: [push]
 
 jobs:
+  basic-job:
   basic-job:
     runs-on: ubuntu-latest
     steps:
