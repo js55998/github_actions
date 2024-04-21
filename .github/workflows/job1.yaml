@@ -7,7 +7,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Show Job and Workflow Details
-        run: |
-          echo "Job name: ${{ context.job }}"
-          echo "Workflow name: ${{ context.github.workflow }}"
-          echo "Run number: ${{ context.github.run_number }}"
+        run: echo "Job name: ${{ context.job }}"
