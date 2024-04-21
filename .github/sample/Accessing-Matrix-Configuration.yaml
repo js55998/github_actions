@@ -1,0 +1,46 @@
+name: Multi-Context Workflow
+
+on: push
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      # Set environment variables from repository and job contexts
+      BUILD_CONFIG: ${{ vars.BUILD_CONFIG }}
+      TEST_TARGET: ${{ job.context.TEST_TARGET }}  # Access job context
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run build script
+        run: ./src/build.sh ${{ env.BUILD_CONFIG }}
+
+      - name: Run tests
+        run: |
+          if [[ ${{ env.TEST_TARGET }} == "all" ]]; then
+            echo "Running all tests..."
+            # Replace with your actual test command
+            make test
+          else
+            echo "Running specific tests for ${{ env.TEST_TARGET }}..."
+            # Replace with your command to run specific tests
+            make test-${{ env.TEST_TARGET }}
+          fi
+
+# This job demonstrates accessing a secret from secrets context
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to deployment server (using secrets context)
+        uses: some-deploy-action@v1
+        with:
+          SERVER_URL: https://your-deployment-server.com
+          # Access deployment credentials from secrets context
+          USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+          PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+
+      - name: Deploy application (assuming successful build/test)
+        run: if [[ ${{ needs.build-and-test.outputs.BUILD_SUCCESS }} == "true" ]]; then echo "Deploying application..."; fi
