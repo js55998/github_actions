@@ -9,14 +9,42 @@ jobs:
         run: |
          echo "All about JOB=${{toJSON(job)}}"
          echo "Job Name=${{github.job}}"
-         echo "Job Container=${{github.job.container}}"
-         echo "Job Container=${{github.job.container.id}}"
-         echo "Job Container=${{github.job.container.network}}"
-         echo "Job Container=${{github.job.services}}"
-         echo "Job Container=${{github.job.services.id}}"
-         echo "Job Container=${{github.job.services.network}}"
-         echo "Job Container=${{github.job.services.ports}}"
-         echo "Job Container=${{job.status}}"
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conditional Step
+        if: github.job == 'job1'
+        run: echo "This step runs only for job1"
+
+  job2:
+    runs-on: windows-latest
+    steps:
+      - name: Conditional Step
+        if: github.job == 'job2'
+        run: echo "This step runs only for job2"
+
+  custom-name-job:
+    name: Custom Name Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Custom Job Name
+        run: echo "Custom Job Name= $github.job"
+
+  generate-output:
+    runs-on: ubuntu-latest
+    outputs:
+      generated-value: ${{ steps.step1.outputs.value }}
+    steps:
+      - name: Generate Value
+        id: step1
+        run: echo "::set-output name=value::GITHUBACTIONS"
+
+  use-output:
+    runs-on: ubuntu-latest
+    needs: generate-output
+    steps:
+      - name: Use Generated Value
+        run: echo "Generated Value= ${{ needs.generate-output.outputs.generated-value }}"
 
 
 
