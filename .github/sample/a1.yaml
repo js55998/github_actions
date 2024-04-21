@@ -23,7 +23,6 @@ jobs:
           environment: dev
           env:
             APP_ID: ${{ vars.APP_ID }}
-
           steps:
             - name: Read a variable
               run: echo "My APP_ID value in the dev job is $APP_ID"

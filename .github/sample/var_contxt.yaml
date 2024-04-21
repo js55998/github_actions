@@ -12,6 +12,8 @@ jobs:
       if: ${{ vars.USE_VARIABLES == 'true' }}
       runs-on: ${{ vars.RUNNER }}
       environment: ${{ vars.ENVIRONMENT_STAGE }}
+      env:
+        APP_ID: ${{ vars.APP_ID }}
       steps:
       - name: Use variables
         run: |
@@ -19,6 +21,7 @@ jobs:
           echo "organization variable : $ORGANIZATION_VAR"
           echo "overridden variable : $OVERRIDE_VAR"
           echo "variable from shell environment : $env_var"
+          echo "My APP_ID value in the dev job is $APP_ID"
         env:
           REPOSITORY_VAR: ${{ vars.REPOSITORY_VAR }}
           ORGANIZATION_VAR: ${{ vars.ORGANIZATION_VAR }}
