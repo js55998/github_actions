@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Print Job Context
         run: |
-         echo "All about JOB=${{job}}"
+         echo "All about JOB=${{toJSON(job)}}"
          echo "Job Name=${{github.job}}"
 
 
