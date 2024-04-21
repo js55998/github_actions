@@ -9,6 +9,7 @@ jobs:
         run: |
          echo "All about JOB=${{toJSON(job)}}"
          echo "Job Name=${{github.job}}"
+         echo "Job Name=${{job.container}}"
   job1:
     runs-on: ubuntu-latest
     steps:
@@ -90,14 +91,6 @@ jobs:
         run: echo "This step will retry if it fails"
         continue-on-error: true
 
-      
-      
-      
-      
-      
-      
-      
-      
 
 
 
