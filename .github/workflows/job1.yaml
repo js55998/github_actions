@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Custom Job Name
-        run: echo "Custom Job Name= $github.job"
+        run: echo "Custom Job Name= $GITHUB_JOB"
 
   generate-output:
     runs-on: ubuntu-latest
@@ -45,6 +45,59 @@ jobs:
     steps:
       - name: Use Generated Value
         run: echo "Generated Value= ${{ needs.generate-output.outputs.generated-value }}"
+  
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [14, 16, 18]
+    steps:
+      - name: Print Node Version
+        run: echo "Node Version= ${{ matrix.version }}"
+
+  print-env:
+    runs-on: ubuntu-latest
+    env:
+      ENV_VAR: my_value
+    steps:
+      - name: Print Env Var
+        run: echo "Environment Variable= $ENV_VAR"
+
+  print-args:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Arguments
+        run: echo "Arguments= ${{ github.event_name }}, ${{ github.repository }} ${{ github.ref }}"
+  
+  check-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Status
+        run: echo "Job Status= ${{ job.status }}"
+  
+  retry-job:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        retry:
+          - 1
+          - 2
+    steps:
+      - name: Retry Step
+        run: echo "This step will retry if it fails"
+        continue-on-error: true
+
+      
+      
+      
+      
+      
+      
+      
+      
 
 
 
