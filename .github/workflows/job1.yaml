@@ -1,13 +1,11 @@
 name: Basic Job Context
 on: [push]
-name: Basic Job Context
-on: [push]
 
 jobs:
-  basic-job:
   basic-job:
     runs-on: ubuntu-latest
     steps:
       - name: Print Job Context
-        run: echo "Job Name= ${{github.job}}"
+        run: echo "Job Name=${{github.job}}, Job ID=${{github.job_id}}"
+
 
