@@ -6,6 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Job Context
-        run: echo "Job Name=${{github.job}}, Job ID=${{github.job_id}}"
+        run: echo "Job Name=${{github.job}}, Job ID=${{github.job.id}}"
 
 
