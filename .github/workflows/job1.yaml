@@ -9,5 +9,14 @@ jobs:
         run: |
          echo "All about JOB=${{toJSON(job)}}"
          echo "Job Name=${{github.job}}"
+         echo "Job Container=${{github.job.container}}"
+         echo "Job Container=${{github.job.container.id}}"
+         echo "Job Container=${{github.job.container.network}}"
+         echo "Job Container=${{github.job.services}}"
+         echo "Job Container=${{github.job.services.id}}"
+         echo "Job Container=${{github.job.services.network}}"
+         echo "Job Container=${{github.job.services.ports}}"
+         echo "Job Container=${{github.job.status}}"
+
 
 
