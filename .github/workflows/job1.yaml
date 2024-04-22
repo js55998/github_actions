@@ -2,6 +2,7 @@ name: Basic Job Context
 on: [push]
 
 jobs:
+# JOB INFO:
   basic-job:
     runs-on: ubuntu-latest
     steps:
@@ -9,7 +10,7 @@ jobs:
         run: |
          echo "All about JOB=${{toJSON(job)}}"
          echo "Job Name=${{github.job}}"
-         echo "Job Name=${{job.container}}"
+# Conditional Execution Based on Job Name:
   job1:
     runs-on: ubuntu-latest
     steps:
@@ -23,14 +24,14 @@ jobs:
       - name: Conditional Step
         if: github.job == 'job2'
         run: echo "This step runs only for job2"
-
+# Setting Custom Job Name:
   custom-name-job:
     name: Custom Name Job
     runs-on: ubuntu-latest
     steps:
       - name: Print Custom Job Name
         run: echo "Custom Job Name= $GITHUB_JOB"
-
+# Accessing Job Outputs:
   generate-output:
     runs-on: ubuntu-latest
     outputs:
@@ -46,7 +47,7 @@ jobs:
     steps:
       - name: Use Generated Value
         run: echo "Generated Value= ${{ needs.generate-output.outputs.generated-value }}"
-  
+# Matrix Strategy with Job Context
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -55,7 +56,7 @@ jobs:
     steps:
       - name: Print Node Version
         run: echo "Node Version= ${{ matrix.version }}"
-
+# Passing Environment Variables to Job
   print-env:
     runs-on: ubuntu-latest
     env:
@@ -63,19 +64,19 @@ jobs:
     steps:
       - name: Print Env Var
         run: echo "Environment Variable= $ENV_VAR"
-
+#Passing Arguments to Jobs:
   print-args:
     runs-on: ubuntu-latest
     steps:
       - name: Print Arguments
         run: echo "Arguments= ${{ github.event_name }}, ${{ github.repository }} ${{ github.ref }}"
-  
+# Accessing Job Status:
   check-status:
     runs-on: ubuntu-latest
     steps:
       - name: Check Status
         run: echo "Job Status= ${{ job.status }}"
-  
+# Timeout and Retries in Job Context:
   retry-job:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -90,7 +91,3 @@ jobs:
       - name: Retry Step
         run: echo "This step will retry if it fails"
         continue-on-error: true
-
-
-
-
