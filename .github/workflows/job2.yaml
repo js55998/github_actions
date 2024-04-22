@@ -1,0 +1,68 @@
+name: Print Job ID
+on: [push]
+
+jobs:
+# Print Job ID:
+  print-job-id:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Job ID
+        run: echo "Job ID= $GITHUB_JOB"
+
+# Conditional Execution Based on Job ID:
+  conditional-job:
+    runs-on: ubuntu-latest
+    if: github.job == 'build'
+    steps:
+      - name: Conditional Step
+        run: echo "This step runs only for the 'build' job."
+
+# Print Job Name:
+  print-job-name:
+    name: My Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Job Name
+        run: echo "Job Name= ${{ github.job }}"
+
+#Use Job ID in Step Name:
+  use-job-id-in-step:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Step using Job ID: ${{ github.job }}"
+        run: echo "This step uses the Job ID in its name."
+
+#Set Job Output:
+  set-job-output:
+    runs-on: ubuntu-latest
+    outputs:
+        job-output: ${{ steps.set-output.outputs.job_output }}
+    steps:
+      - name: Set Job Output
+        id: set-output
+        run: echo "::set-output name=job_output::output_value"
+
+#Access Job Context in Docker Container:
+  docker-job:
+    runs-on: ubuntu-latest
+    container:
+        image: ubuntu:latest
+    steps:
+      - name: Print Job ID in Docker
+        run: echo "Job ID= $GITHUB_JOB"
+
+#Access Job Context in Python Script:
+  python-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Python Script
+        run: python script.py
+#Use Job Context in Matrix Strategy:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        job-id: [1, 2, 3]
+    steps:
+      - name: Print Job ID
+        run: echo "Job ID= ${{ github.job_id }}"
