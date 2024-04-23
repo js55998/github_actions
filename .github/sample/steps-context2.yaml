@@ -2,24 +2,25 @@ name: Print Step Name
 on: [push]
 
 jobs:
+# Print Step Name
   print-step-name:
     runs-on: ubuntu-latest
     steps:
       - name: Print Step Name
         run: echo "Step Name= $GITHUB_STEP_NAME"
-
+# Print Step Number
   print-step-number:
     runs-on: ubuntu-latest
     steps:
       - name: Print Step Number
         run: echo "Step Number= $GITHUB_STEP_NUMBER"
-
+# Print Workflow Name
   print-workflow-name:
     runs-on: ubuntu-latest
     steps:
       - name: Print Workflow Name
         run: echo "Workflow Name= $GITHUB_WORKFLOW"
-
+# Use Step Name in Docker Container
   docker-step:
     runs-on: ubuntu-latest
     container:
@@ -27,7 +28,7 @@ jobs:
     steps:
       - name: Print Step Name in Docker
         run: echo "Step Name= $GITHUB_STEP_NAME"
-
+# Pass Step Name to Another Step:
   job1:
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +42,7 @@ jobs:
     steps:
       - name: Print Step Name from Job1
         run: echo "Step Name from Job1= ${{ needs.job1.outputs.step_name }}"
-
+# Print Step Output:
   set-step-output:
     runs-on: ubuntu-latest
     steps:
@@ -55,7 +56,7 @@ jobs:
     steps:
       - name: Print Step Output
         run: echo "Step Output= ${{ needs.set-step-output.outputs.step_output }}"
-
+# Use Step Context in External Action:
   external-action-job:
     runs-on: ubuntu-latest
     steps:
@@ -63,7 +64,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           step_name: ${{ github.step_name }}
-
+# Print Step Outcome:
   print-step-outcome:
     runs-on: ubuntu-latest
     steps:
