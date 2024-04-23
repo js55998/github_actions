@@ -6,7 +6,7 @@ on:
 jobs:
   job1:
     # local repo
-    uses: ./.github/workflows/called-workflow.yml@v1
+    uses: ./.github/workflows/called-workflow.yaml
     # other repo
     # uses: octo-org/example-repo/.github/workflows/called-workflow.yml@v1
 
