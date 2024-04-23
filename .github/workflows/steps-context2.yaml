@@ -1,0 +1,71 @@
+name: Print Step Name
+on: [push]
+
+jobs:
+  print-step-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Step Name
+        run: echo "Step Name= $GITHUB_STEP_NAME"
+
+  print-step-number:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Step Number
+        run: echo "Step Number= $GITHUB_STEP_NUMBER"
+
+  print-workflow-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Workflow Name
+        run: echo "Workflow Name= $GITHUB_WORKFLOW"
+
+  docker-step:
+    runs-on: ubuntu-latest
+    container:
+        image: ubuntu:latest
+    steps:
+      - name: Print Step Name in Docker
+        run: echo "Step Name= $GITHUB_STEP_NAME"
+
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Step Name Output
+        id: set-step-name
+        run: echo "::set-output name=step_name::$GITHUB_STEP_NAME"
+
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Step Name from Job1
+        run: echo "Step Name from Job1= ${{ needs.job1.outputs.step_name }}"
+
+  set-step-output:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Step Output
+        id: set-output
+        run: echo "::set-output name=step_output::output_value"
+
+  use-step-output:
+    needs: set-step-output
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Step Output
+        run: echo "Step Output= ${{ needs.set-step-output.outputs.step_output }}"
+
+  external-action-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use External Action
+        uses: actions/checkout@v3
+        with:
+          step_name: ${{ github.step_name }}
+
+  print-step-outcome:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Step Outcome
+        run: echo "Step Outcome= $GITHUB_STEP_OUTCOME"
