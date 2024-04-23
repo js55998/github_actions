@@ -34,4 +34,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Python Script
-        run: python ./wokflows/script.py
+        run: python ./.github/workflows/script.py
