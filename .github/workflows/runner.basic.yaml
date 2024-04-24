@@ -20,11 +20,13 @@ jobs:
       - name: Print Runner IP Address
         run: |
           ip route get 1 | awk '{print $NF;exit}'
+          curl -s https://api.ipify.org
+          hostname -I | cut -d' ' -f1
 
   docker-job:
     runs-on: ubuntu-latest
     container:
-        image: ubuntu:latest
+        image: windows-latest
     steps:
       - name: Print Runner OS in Docker
         run: echo "Runner OS= ${{ runner.os }}"
