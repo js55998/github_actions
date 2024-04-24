@@ -20,7 +20,9 @@ jobs:
       - name: Print Runner IP Address
         run: |
           ip route get 1 | awk '{print $NF;exit}'
+          echo "-------"
           curl -s https://api.ipify.org
+          echo "-------"
           hostname -I | cut -d' ' -f1
 
   docker-job:
