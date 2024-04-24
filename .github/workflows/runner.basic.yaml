@@ -26,9 +26,9 @@ jobs:
           hostname -I | cut -d' ' -f1
 
   docker-job:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     container:
-        image: windows-latest
+        image: ubuntu-latest
     steps:
       - name: Print Runner OS in Docker
         run: echo "Runner OS= ${{ runner.os }}"
