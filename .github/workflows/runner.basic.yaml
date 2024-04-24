@@ -1,0 +1,19 @@
+name: Print Runner OS
+on: [push]
+
+jobs:
+# Print Runner OS:
+  print-runner-os:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Print Runner OS
+        run: echo "Runner OS= ${{ runner.os }}"
+
+  print-runner-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Runner Labels
+        run: echo "Runner Labels= ${{ toJson(runner)}}"
