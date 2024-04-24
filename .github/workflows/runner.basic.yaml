@@ -11,9 +11,20 @@ jobs:
     steps:
       - name: Print Runner OS
         run: echo "Runner OS= ${{ runner.os }}"
-
-  print-runner-labels:
+# Print Runner Details:
+  print-runner-Details:
     runs-on: ubuntu-latest
     steps:
       - name: Print Runner Labels
         run: echo "Runner Labels= ${{ toJson(runner)}}"
+      - name: Print Runner IP Address
+        run: |
+          ip route get 1 | awk '{print $NF;exit}'
+
+  docker-job:
+    runs-on: ubuntu-latest
+    container:
+        image: ubuntu:latest
+    steps:
+      - name: Print Runner OS in Docker
+        run: echo "Runner OS= ${{ runner.os }}"
